@@ -1,0 +1,16 @@
+#!/home/alexandr/.rbenv/versions/2.5.0/bin/ruby
+
+require 'bundler/setup'
+require 'admitad'
+require 'yaml'
+require 'pry'
+
+secrets = YAML.load_file('secrets.yml')
+
+Admitad.config do |c|
+  c.client_id     = secrets['client_id']
+  c.client_secret = secrets['client_secret']
+  c.scope         = secrets['scope']
+end
+
+Pry.start
