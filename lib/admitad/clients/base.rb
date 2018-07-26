@@ -8,6 +8,8 @@ module Admitad
       debug_output $stdout
       base_uri Constants::BASE_URI
 
+      attr_reader :attributes
+
       def initialize
         @client_id     = Admitad.configuration.client_id
         @client_secret = Admitad.configuration.client_secret
@@ -16,8 +18,14 @@ module Admitad
 
       private
 
-      def body
-        @body ||= @body.map { |k, v| [k.to_sym, v] }.to_h.slice(*allowed_params)
+      def assign_attributes(**attributes)
+        @attributes = attributes.slice(*allowed_params)
+
+        attributes.each do |key, value|
+          instance_variable_set("@#{key}", value) if value
+        end
+
+        self.class.headers['Authorization'] = "Bearer #{@access_token}" if @access_token && !is_a?(Auth)
       end
 
       def allowed_params

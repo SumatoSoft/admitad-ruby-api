@@ -2,9 +2,18 @@ require 'virtus'
 require 'admitad/config'
 require 'admitad/version'
 require 'admitad/constants'
-Dir[File.join(__dir__, 'admitad', 'error', '*.rb')].each { |file| require file }
-require 'admitad/clients/clients'
-require 'admitad/wrappers/wrappers'
+require 'admitad/clients/base'
+require 'admitad/wrappers/base'
+
+def require_folder(folder, **args)
+  files = Dir[File.join(__dir__, 'admitad', folder, '*.rb')]
+  files.reject! { |file| file[args[:reject]] } if args[:reject]
+  files.each { |file| require file }
+end
+
+require_folder('error')
+require_folder('clients', reject: 'base')
+require_folder('wrappers', reject: 'base')
 
 module Admitad
   def configuration
