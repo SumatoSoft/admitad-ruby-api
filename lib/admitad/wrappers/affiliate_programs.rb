@@ -2,7 +2,7 @@ module Admitad
   module Wrappers
     class AffiliatePrograms < Base
       class << self
-        delegate :where, :for_ad_space, to: :instance
+        delegate :where, :for_ad_space, :attach, :detach, to: :instance
       end
 
       def where(**params)
@@ -11,21 +11,34 @@ module Admitad
       end
 
       def for_ad_space(ad_space, **params)
-        id = ad_space.id unless id.is_a?(Integer)
+        id = ad_space.is_a?(AdSpaces::AdSpace) ? ad_space.id : ad_space
         response = client.advcampaigns_website(params.merge(w_id: id))
         generate_response(response)
+      end
+
+      %i[attach detach].each do |api_method|
+        define_method api_method do |**params|
+          response = client.send("advcampaigns_#{api_method}", params)
+          generate_response(response)
+        end
       end
 
       private
 
       def generate_response(response)
-        return Error.new(response) if response.key?('error')
+        return Error.new(response) if response.key?(:error)
+        return Success.new(response) if response.key?(:success)
 
         if response[:results]
           response[:results].map { |attributes| AffiliateProgram.new(attributes) }
         else
           AffiliateProgram.new(response)
         end
+      end
+
+      class Success < Admitad::Wrappers::Success
+        attribute :message, String
+        attribute :success, String
       end
 
       class Action < Success

@@ -5,7 +5,7 @@ module Admitad
     class Auth < Base
       def token(**params)
         assign_attributes(params)
-        response = self.class.post('/token/', body: body).map { |k, v| [k.to_sym, v] }.to_h
+        response = self.class.post('/token/', body: body).transform_keys(&:to_sym)
         assign_attributes(response)
         response
       end

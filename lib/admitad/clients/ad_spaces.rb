@@ -3,7 +3,7 @@ module Admitad
     class AdSpaces < Base
       def websites(**params)
         assign_attributes(params)
-        self.class.get('/websites/', query: attributes).to_h.map { |k, v| [k.to_sym, v] }.to_h
+        self.class.get('/websites/', query: attributes).transform_keys(&:to_sym)
       end
 
       private

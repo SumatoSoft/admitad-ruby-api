@@ -5,14 +5,13 @@ module Admitad
         delegate :token, :refresh_token, to: :instance
       end
 
-      def token
-        response = client.token(grant_type: :client_credentials)
+      def token(**params)
+        response = client.token({ grant_type: :client_credentials }.merge(params))
         generate_response(response)
       end
 
-      def refresh_token(refresh_token = nil)
-        params = { grant_type: :refresh_token }.merge(refresh_token: refresh_token)
-        response = client.token(params)
+      def refresh_token(refresh_token = nil, **params)
+        response = client.token(params.merge(grant_type: :refresh_token, refresh_token: refresh_token))
         generate_response(response)
       end
 
