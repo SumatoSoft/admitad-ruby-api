@@ -37,7 +37,6 @@ module Admitad
       manage_broker_application
     ].freeze
 
-    BASE_URI   = 'https://api.admitad.com'.freeze
-    GRANT_TYPE = 'client_credentials'.freeze
+    BASE_URI = 'https://api.admitad.com'.freeze
   end
 end

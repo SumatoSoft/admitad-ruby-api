@@ -4,25 +4,38 @@ module Admitad
   module Clients
     class Auth < Base
       def token(**params)
-        self.class.post('/token/', header: token_header, body: token_body.merge(params))
+        assign_attributes(params)
+        response = self.class.post('/token/', body: body).transform_keys(&:to_sym)
+        assign_attributes(response)
+        response
       end
 
       private
 
-      def token_header
-        self.class.headers.merge!('Authorization' => "Basic #{data_b64_encoded}")
+      def body
+        body = { grant_type: @grant_type, client_id: @client_id, scope: @scope }
+
+        if client_credentials?
+          self.class.headers['Authorization'] = "Basic #{@basic}"
+          body
+        else
+          self.class.headers.delete('Authorization')
+          body.merge(client_secret: @client_secret, refresh_token: @refresh_token)
+        end
       end
 
-      def token_body
-        {
-          grant_type: @grant_type,
-          client_id: @client_id,
-          scope: @scope
-        }
+      def assign_attributes(**attributes)
+        super(attributes)
+
+        @basic = Base64.strict_encode64("#{@client_id}:#{@client_secret}")
       end
 
-      def data_b64_encoded
-        Base64.strict_encode64("#{@client_id}:#{@client_secret}")
+      def client_credentials?
+        @grant_type == :client_credentials
+      end
+
+      def allowed_params
+        %i[grant_type client_id scope refresh_token client_secret access_token]
       end
     end
   end

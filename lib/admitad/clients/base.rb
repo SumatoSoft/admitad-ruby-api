@@ -8,11 +8,39 @@ module Admitad
       debug_output $stdout
       base_uri Constants::BASE_URI
 
+      attr_reader :attributes
+
       def initialize
         @client_id     = Admitad.configuration.client_id
         @client_secret = Admitad.configuration.client_secret
         @scope         = Admitad.configuration.scope
-        @grant_type    = Constants::GRANT_TYPE
+      end
+
+      private
+
+      def assign_attributes(**attributes)
+        @attributes = attributes.slice(*allowed_params)
+
+        attributes.each do |key, value|
+          instance_variable_set("@#{key}", value) if value
+        end
+
+        self.class.headers['Authorization'] = "Bearer #{@access_token}" if @access_token && !is_a?(Auth)
+      end
+
+      def allowed_params
+        raise "You must override #allowed_params in class #{self.class.name} to add parameters filter"
+      end
+
+      def add_params_to_path
+        return unless @path[':']
+
+        allowed_params.each do |param|
+          value = instance_variable_get("@#{param}")
+          @path.gsub!(param.inspect, value.to_s) if value
+        end
+
+        @path.gsub!(%r{:[[:word:]]+\/}, '')
       end
     end
   end
