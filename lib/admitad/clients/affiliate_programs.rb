@@ -3,16 +3,19 @@ module Admitad
     class AffiliatePrograms < Base
       def advcampaigns(**params)
         assign_attributes(params)
-        self.class.get('/advcampaigns/', query: attributes).transform_keys(&:to_sym)
+        path = '/advcampaigns/'
+        path << "#{@id}/" if @id
+
+        self.class.get(path, query: attributes).transform_keys(&:to_sym)
       end
 
       def advcampaigns_website(**params)
         assign_attributes(params)
 
         path = '/advcampaigns/'
-        path << "#{attributes[:c_id]}/" if attributes[:c_id]
+        path << "#{@c_id}/" if @c_id
         path << 'website/'
-        path << "#{attributes[:w_id]}/" if attributes[:w_id]
+        path << "#{@w_id}/" if @w_id
 
         self.class.get(path, query: attributes).transform_keys(&:to_sym)
       end
@@ -22,9 +25,9 @@ module Admitad
           assign_attributes(params)
 
           path = '/advcampaigns/'
-          path << "#{attributes[:c_id]}/" if attributes[:c_id]
+          path << "#{@c_id}/" if @c_id
           path << "#{api_method}/"
-          path << "#{attributes[:w_id]}/" if attributes[:w_id]
+          path << "#{@w_id}/" if @w_id
 
           self.class.post(path, body: attributes).transform_keys(&:to_sym)
         end
