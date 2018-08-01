@@ -4,7 +4,7 @@ module Admitad
       def advcampaigns(**params)
         assign_attributes(params)
         path = '/advcampaigns/'
-        path << "#{@id}/" if @id
+        path << "#{attributes[:id]}/" if attributes[:id]
 
         self.class.get(path, query: attributes).transform_keys(&:to_sym)
       end
@@ -13,9 +13,9 @@ module Admitad
         assign_attributes(params)
 
         path = '/advcampaigns/'
-        path << "#{@c_id}/" if @c_id
+        path << "#{attributes[:c_id]}/" if attributes[:c_id]
         path << 'website/'
-        path << "#{@w_id}/" if @w_id
+        path << "#{attributes[:w_id]}/" if attributes[:w_id]
 
         self.class.get(path, query: attributes).transform_keys(&:to_sym)
       end
@@ -25,9 +25,9 @@ module Admitad
           assign_attributes(params)
 
           path = '/advcampaigns/'
-          path << "#{@c_id}/" if @c_id
+          path << "#{attributes[:c_id]}/" if attributes[:c_id]
           path << "#{api_method}/"
-          path << "#{@w_id}/" if @w_id
+          path << "#{attributes[:w_id]}/" if attributes[:w_id]
 
           self.class.post(path, body: attributes).transform_keys(&:to_sym)
         end
