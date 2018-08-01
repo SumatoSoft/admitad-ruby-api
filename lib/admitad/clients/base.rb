@@ -31,17 +31,6 @@ module Admitad
       def allowed_params
         raise "You must override #allowed_params in class #{self.class.name} to add parameters filter"
       end
-
-      def add_params_to_path
-        return unless @path[':']
-
-        allowed_params.each do |param|
-          value = instance_variable_get("@#{param}")
-          @path.gsub!(param.inspect, value.to_s) if value
-        end
-
-        @path.gsub!(%r{:[[:word:]]+\/}, '')
-      end
     end
   end
 end

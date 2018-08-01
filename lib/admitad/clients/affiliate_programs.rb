@@ -8,17 +8,25 @@ module Admitad
 
       def advcampaigns_website(**params)
         assign_attributes(params)
-        @path = '/advcampaigns/:c_id/'
-        add_params_to_path
-        self.class.get(@path, query: attributes).transform_keys(&:to_sym)
+
+        path = '/advcampaigns/'
+        path << "#{attributes[:c_id]}/" if attributes[:c_id]
+        path << 'website/'
+        path << "#{attributes[:w_id]}/" if attributes[:w_id]
+
+        self.class.get(path, query: attributes).transform_keys(&:to_sym)
       end
 
-      %i[attach detach].each do |api_method|
+      %w[attach detach].each do |api_method|
         define_method "advcampaigns_#{api_method}" do |**params|
           assign_attributes(params)
-          @path = "/advcampaigns/:c_id/#{api_method}/:w_id/"
-          add_params_to_path
-          self.class.post(@path, body: attributes).transform_keys(&:to_sym)
+
+          path = '/advcampaigns/'
+          path << "#{attributes[:c_id]}/" if attributes[:c_id]
+          path << "#{api_method}/"
+          path << "#{attributes[:w_id]}/" if attributes[:w_id]
+
+          self.class.post(path, body: attributes).transform_keys(&:to_sym)
         end
       end
 

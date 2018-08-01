@@ -17,8 +17,11 @@ module Admitad
       end
 
       %i[attach detach].each do |api_method|
-        define_method api_method do |**params|
-          response = client.send("advcampaigns_#{api_method}", params)
+        define_method api_method do |ad_space, affiliate_programs, **params|
+          w_id = ad_space.is_a?(AdSpaces::AdSpace) ? ad_space.id : ad_space
+          c_id = ad_space.is_a?(AffiliatePrograms::AffiliateProgram) ? affiliate_programs.id : affiliate_programs
+
+          response = client.send("advcampaigns_#{api_method}", params.merge(w_id: w_id, c_id: c_id))
           generate_response(response)
         end
       end
@@ -30,7 +33,7 @@ module Admitad
         return Success.new(response) if response.key?(:success)
 
         if response[:results]
-          response[:results].map { |attributes| AffiliateProgram.new(attributes) }
+          Response.new(affiliate_programs: response[:results], metadata: response[:_meta])
         else
           AffiliateProgram.new(response)
         end
@@ -103,6 +106,11 @@ module Admitad
         attribute :epc, Float
         attribute :allow_deeplink, Boolean
         attribute :show_products_links, Boolean
+      end
+
+      class Response < Success
+        attribute :affiliate_programs, Array[AffiliateProgram]
+        attribute :metadata, Hash
       end
     end
   end
