@@ -17,9 +17,9 @@ module Admitad
       end
 
       %i[attach detach].each do |api_method|
-        define_method api_method do |ad_space, affiliate_programs, **params|
+        define_method api_method do |ad_space, affiliate_program, **params|
           w_id = ad_space.is_a?(AdSpaces::AdSpace) ? ad_space.id : ad_space
-          c_id = ad_space.is_a?(AffiliatePrograms::AffiliateProgram) ? affiliate_programs.id : affiliate_programs
+          c_id = ad_space.is_a?(AffiliatePrograms::AffiliateProgram) ? affiliate_program.id : affiliate_program
 
           response = client.send("advcampaigns_#{api_method}", params.merge(w_id: w_id, c_id: c_id))
           generate_response(response)
