@@ -6,6 +6,11 @@ module Admitad
         self.class.get('/websites/regions/', query: attributes).transform_keys(&:to_sym)
       end
 
+      def categories(**params)
+        assign_attributes(params)
+        self.class.get('/categories/', query: attributes).transform_keys(&:to_sym)
+      end
+
       private
 
       def allowed_params
