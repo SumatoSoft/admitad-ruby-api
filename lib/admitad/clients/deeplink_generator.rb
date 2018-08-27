@@ -5,14 +5,14 @@ module Admitad
         assign_attributes(params)
         path = "/deeplink/#{attributes[:w_id]}/advcampaign/#{attributes[:c_id]}/"
         response = self.class.get(path, query: query)
-        response.is_a?(Hash) ? response.transform_keys(&:to_sym) : response
+        response.respond_to?(:transform_keys) ? response.transform_keys(&:to_sym) : response
       end
+
+      private
 
       def allowed_params
         %i[w_id c_id subid ulp]
       end
-
-      private
 
       def query
         @attributes.slice(:subid, :ulp)
