@@ -6,29 +6,18 @@ module Admitad
       end
 
       def generate(**params)
-        @params = params
-        return Error.new(error: error) if error.present?
-
-        @response = client.deeplink(@params)
+        @response = client.deeplink(params)
         generate_response
       end
 
       private
 
       def generate_response
-        return Error.new(@response) if @response.is_a?(Hash) && @response.key?(:error)
-
-        @response.first
+        @response.is_a?(Hash) && @response.key?(:error) ? Error.new(@response) : Response.new(deeplinks: @response)
       end
 
-      def allowed_params
-        client.allowed_params
-      end
-
-      def error
-        @error ||= allowed_params.reject { |attribute| @params[attribute] }
-                                 .map { |attribute| "#{attribute.capitalize} is required" }
-                                 .join('. ')
+      class Response < Success
+        attribute :deeplinks, Array[String]
       end
     end
   end
