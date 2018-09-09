@@ -38,5 +38,44 @@ module Admitad
     ].freeze
 
     BASE_URI = 'https://api.admitad.com'.freeze
+
+    STATISTIC_ACTIONS_PARAMS = %i[
+      offset
+      limit
+      date_start
+      date_end
+      closing_date_start
+      closing_date_end
+      status_updated_start
+      status_updated_end
+      website
+      campaign
+      subid
+      subid1
+      subid2
+      subid3
+      subid4
+      source
+      status
+      keyword
+      action
+      action_id
+      banner
+      action_type
+      processed
+      paid
+      total
+      order_by
+    ].freeze
+
+    BASE_PARAMS = %i[offset limit].freeze
+
+    AFFILIATE_PROGRAMS_PARAMS = %i[offset limit language website has_tool traffic_id connection_status].freeze
+
+    AD_SPACE_PARAMS = %i[offset limit status campaign_status access_token id].freeze
+
+    BUFFER_TIME = 10
+
+    ERRORS = %w[error_description error_code error].freeze
   end
 end
