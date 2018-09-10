@@ -2,18 +2,10 @@ require 'virtus'
 require 'admitad/config'
 require 'admitad/version'
 require 'admitad/constants'
-require 'admitad/clients/base'
-require 'admitad/wrappers/base'
+require 'admitad/models/result'
 
-def require_folder(folder, **args)
-  files = Dir[File.join(__dir__, 'admitad', folder, '*.rb')]
-  files.reject! { |file| file[args[:reject]] } if args[:reject]
-  files.each { |file| require file }
-end
-
-require_folder('error')
-require_folder('clients', reject: 'base')
-require_folder('wrappers', reject: 'base')
+Dir[File.join(__dir__, 'admitad', 'models', '*.rb')].map(&method(:require))
+Dir[File.join(__dir__, 'admitad', '*.rb')].map(&method(:require))
 
 module Admitad
   def configuration
@@ -26,4 +18,10 @@ module Admitad
   end
 
   module_function :configuration, :config
+
+  AdSpace = AdSpaces::AdSpace
+  AffiliateProgram = AffiliatePrograms::AffiliateProgram
+  Coupon = Coupons::Coupon
 end
+
+AdmitadAPI = Admitad
