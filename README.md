@@ -1,8 +1,6 @@
 # Admitad
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/admitad`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Link to api [https://developers.admitad.com/en/doc/](https://developers.admitad.com/en/doc/)
 
 ## Installation
 
@@ -22,7 +20,24 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+
+### Configure your app
+
+
+```ruby
+# config/initializers/admitad.rb
+
+Admitad.config do |c|
+  c.client_id     = Rails.application.secrets.admitad[:client_id]
+  c.client_secret = Rails.application.secrets.admitad[:client_secret]
+  c.scope         = Rails.application.secrets.admitad[:scope]
+end
+```
+If no scope is specified, will be used the whole
+
+### Start to use
+
+The best documentation is the source code. Use it in conjunction with the API documentation
 
 ## Development
 

@@ -11,3 +11,6 @@ secrets.yml
 
 # rspec failure tracking
 .rspec_status
+
+# ingore the gem builds
+*.gem
