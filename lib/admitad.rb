@@ -18,4 +18,10 @@ module Admitad
   end
 
   module_function :configuration, :config
+
+  AdSpace = AdSpaces::AdSpace
+  AffiliateProgram = AffiliatePrograms::AffiliateProgram
+  Coupon = Coupons::Coupon
 end
+
+AdmitadAPI = Admitad

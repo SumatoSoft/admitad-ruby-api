@@ -10,21 +10,42 @@ module Admitad
     def initialize(access_token = nil)
       @client_id     = Admitad.configuration.client_id
       @client_secret = Admitad.configuration.client_secret
-      @scope         = Admitad.configuration.scope || Constants::SCOPES
+      @scope         = Admitad.configuration.scope || Constants::SCOPES.join(' ')
       @access_token  = access_token
+    end
+
+    def coupons_categories(**params)
+      path = '/coupons/categories/'
+      path << "#{params[:id]}/"
+      get(path, query: params.slice(*Constants::BASE_PARAMS))
+    end
+
+    def coupons(**params)
+      path = '/coupons/'
+      path << "#{params[:id]}/" if params[:id]
+      get(path, query: params.slice(*Constants::BASE_PARAMS))
+    end
+
+    def coupons_website(**params)
+      path = '/coupons/'
+      path << "#{params[:c_id]}/" if params[:c_id]
+      path << 'website/'
+      path << "#{params[:w_id]}/" if params[:w_id]
+
+      get(path, query: params.slice(*Constants::COUPONS_PARAMS))
     end
 
     def websites(**params)
       path = '/websites/'
       path << "#{params[:id]}/" if params[:id]
-      get(path, query: params.slice(Constants::AD_SPACE_PARAMS))
+      get(path, query: params.slice(*Constants::AD_SPACE_PARAMS))
     end
 
     def advcampaigns(**params)
       path = '/advcampaigns/'
       path << "#{params[:id]}/" if params[:id]
 
-      get(path, query: params.slice(Constants::AFFILIATE_PROGRAMS_PARAMS))
+      get(path, query: params.slice(*Constants::AFFILIATE_PROGRAMS_PARAMS))
     end
 
     def advcampaigns_website(**params)
@@ -33,7 +54,7 @@ module Admitad
       path << 'website/'
       path << "#{params[:w_id]}/" if params[:w_id]
 
-      get(path, query: params.slice(Constants::AFFILIATE_PROGRAMS_PARAMS))
+      get(path, query: params.slice(*Constants::AFFILIATE_PROGRAMS_PARAMS))
     end
 
     %w[attach detach].each do |api_method|
@@ -43,7 +64,7 @@ module Admitad
         path << "#{api_method}/"
         path << "#{params[:w_id]}/" if params[:w_id]
 
-        post(path, body: params.slice(Constants::AFFILIATE_PROGRAMS_PARAMS))
+        post(path, body: params.slice(*Constants::AFFILIATE_PROGRAMS_PARAMS))
       end
     end
 
@@ -52,7 +73,7 @@ module Admitad
     end
 
     def statistics_actions(**params)
-      get('/statistics/actions/', query: params.slice(Constants::STATISTIC_ACTIONS_PARAMS))
+      get('/statistics/actions/', query: params.slice(*Constants::STATISTIC_ACTIONS_PARAMS))
     end
 
     def deeplink(**params)
@@ -60,11 +81,11 @@ module Admitad
     end
 
     def websites_regions(**params)
-      get('/websites/regions/', query: params.slice(Constants::BASE_PARAMS))
+      get('/websites/regions/', query: params.slice(*Constants::BASE_PARAMS))
     end
 
     def categories(**params)
-      get('/categories/', query: params.slice(Constants::BASE_PARAMS))
+      get('/categories/', query: params.slice(*Constants::BASE_PARAMS))
     end
 
     private

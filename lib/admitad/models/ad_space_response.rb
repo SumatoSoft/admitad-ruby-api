@@ -30,6 +30,16 @@ module Admitad
       attribute :creation_date, String
       attribute :validation_passed, Boolean
       attribute :description, String
+
+      class << self
+        def where(**params)
+          Response.create(Wrapper.ad_spaces_where(params))
+        end
+
+        def find(id)
+          create(Wrapper.find_ad_space_by_id(id))
+        end
+      end
     end
 
     class Response < Success

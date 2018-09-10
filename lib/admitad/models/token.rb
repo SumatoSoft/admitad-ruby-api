@@ -9,6 +9,7 @@ module Admitad
     attribute :language, String
     attribute :access_token, String
     attribute :expires_in, Integer
+    attribute :expires_at, Integer
     attribute :token_type, String
     attribute :scope, String
     attribute :refresh_token, String
@@ -19,7 +20,7 @@ module Admitad
     end
 
     def expired?
-      (Time.current + Constants::BUFFER_TIME).to_i > @expires_at
+      (Time.current + Constants::BUFFER_TIME).to_i > expires_at
     end
   end
 end

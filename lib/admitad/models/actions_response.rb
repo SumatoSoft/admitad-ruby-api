@@ -43,6 +43,10 @@ module Admitad
     attribute :paid, Integer
     attribute :order_id, Integer
     attribute :positions, Array[Admitad::Position]
+
+    def self.where(**params)
+      ActionsResponse.create(Wrapper.action_statistic(params))
+    end
   end
 
   class ActionsResponse < Success

@@ -74,6 +74,20 @@ module Admitad
 
     AD_SPACE_PARAMS = %i[offset limit status campaign_status access_token id].freeze
 
+    COUPONS_PARAMS = %i[
+      campaign
+      category
+      campaign_category
+      type
+      search
+      date_start
+      date_end
+      offset
+      limit
+      region
+      order_by
+    ].freeze
+
     BUFFER_TIME = 10
 
     ERRORS = %w[error_description error_code error].freeze

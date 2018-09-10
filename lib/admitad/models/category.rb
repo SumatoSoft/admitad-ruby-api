@@ -4,6 +4,10 @@ module Admitad
     attribute :parent, Category
     attribute :name, String
     attribute :language, String
+
+    def self.where(**params)
+      CategoryResponse.create(Wrapper.categories(params))
+    end
   end
 
   class CategoryResponse < Success
