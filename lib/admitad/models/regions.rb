@@ -4,8 +4,14 @@ module Admitad
 
     alias value results
 
-    def self.where(**params)
-      create(Wrapper.regions(params))
+    class << self
+      def where(**params)
+        create(Wrapper.regions(params))
+      end
+
+      def all
+        where
+      end
     end
   end
 end

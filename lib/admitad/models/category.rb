@@ -5,8 +5,14 @@ module Admitad
     attribute :name, String
     attribute :language, String
 
-    def self.where(**params)
-      CategoryResponse.create(Wrapper.categories(params))
+    class << self
+      def where(**params)
+        CategoryResponse.create(Wrapper.categories(params))
+      end
+
+      def all
+        where
+      end
     end
   end
 

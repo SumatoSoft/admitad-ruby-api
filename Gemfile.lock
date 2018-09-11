@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    admitad (0.0.3)
+    admitad (0.0.4)
       activesupport
       httparty (~> 0.16.2)
       virtus (~> 1.0, >= 1.0.5)
