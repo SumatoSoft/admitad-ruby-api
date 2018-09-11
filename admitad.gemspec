@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.description   = 'This interface helps you to create applications for Admitad affiliate network.
                           You can build up applications to analyze your own statistics and accounting records or
                           to put them up for sale in the Admitad App Store.'
-  spec.homepage      = 'https://github.com/alexandr-senyuk/admitad-ruby-api'
+  spec.homepage      = 'https://github.com/SumatoSoft/admitad-ruby-api'
   spec.license       = 'MIT'
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
