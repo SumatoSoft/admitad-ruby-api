@@ -5,7 +5,8 @@ module Admitad
       delegate :action_statistic, :generate_deeplink, :regions, :coupon_categories,
                :categories, :ad_spaces_where, :find_ad_space_by_id, :coupons, :find_coupon,
                :affiliate_programs_where, :affiliate_programs_for_ad_space,
-               :connect_affiliate_program, :disconnect_affiliate_program,
+               :connect_affiliate_program, :disconnect_affiliate_program, :find_coupon_for_website,
+               :coupons_for_website,
                to: :instance
     end
 

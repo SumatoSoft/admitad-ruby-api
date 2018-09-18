@@ -52,9 +52,12 @@ module Admitad
         end
 
         def where(**params)
-          attributes = params[:ad_space_id] ? Wrapper.coupons_for_website(**params) : Wrapper.coupons(params)
+          params[:w_id] = params.delete(:ad_space_id)
+          attributes = params[:w_id] ? Wrapper.coupons_for_website(params) : Wrapper.coupons(params)
           Response.create(attributes)
         end
+
+        alias all where
       end
     end
 
