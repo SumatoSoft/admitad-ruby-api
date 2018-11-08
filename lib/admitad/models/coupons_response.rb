@@ -45,6 +45,9 @@ module Admitad
       attribute :regions, Array[String]
       attribute :types, Array[Type]
       attribute :description, String
+      attribute :frameset_link, String
+      attribute :goto_link, String
+      attribute :promocode, String
 
       class << self
         def find(id)
