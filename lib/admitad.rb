@@ -22,6 +22,7 @@ module Admitad
   AdSpace = AdSpaces::AdSpace
   AffiliateProgram = AffiliatePrograms::AffiliateProgram
   Coupon = Coupons::Coupon
+  Currency = Currencies::Currency
 end
 
 AdmitadAPI = Admitad

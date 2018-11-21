@@ -88,6 +88,14 @@ module Admitad
       get('/categories/', query: params.slice(*Constants::BASE_PARAMS))
     end
 
+    def currencies(**params)
+      get('/currencies/', query: params.slice(*Constants::BASE_PARAMS))
+    end
+
+    def currencies_rate(**params)
+      get('/currencies/rate/', query: params.slice(:base, :target, :date))
+    end
+
     private
 
     def post(path, options = {}, &block)

@@ -6,7 +6,7 @@ module Admitad
                :categories, :ad_spaces_where, :find_ad_space_by_id, :coupons, :find_coupon,
                :affiliate_programs_where, :affiliate_programs_for_ad_space,
                :connect_affiliate_program, :disconnect_affiliate_program, :find_coupon_for_website,
-               :coupons_for_website,
+               :coupons_for_website, :currencies, :currencies_rate,
                to: :instance
     end
 
@@ -59,6 +59,16 @@ module Admitad
     def categories(**params)
       check_token
       client.categories(params)
+    end
+
+    def currencies(**params)
+      check_token
+      client.currencies(params)
+    end
+
+    def currencies_rate(**params)
+      check_token
+      client.currencies_rate(params)
     end
 
     def ad_spaces_where(**params)
