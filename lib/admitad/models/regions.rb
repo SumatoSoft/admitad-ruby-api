@@ -1,16 +1,14 @@
 module Admitad
   class Regions < Success
     attribute :results, Array
+    attribute :_meta, Hash
 
-    alias value results
+    alias regions results
+    alias metadata _meta
 
     class << self
       def where(**params)
         create(Wrapper.regions(params))
-      end
-
-      def all
-        where
       end
     end
   end
