@@ -5,7 +5,7 @@ require 'admitad/constants'
 require 'admitad/models/result'
 
 Dir[File.join(__dir__, 'admitad', 'models', '*.rb')].map(&method(:require))
-Dir[File.join(__dir__, 'admitad', '*.rb')].map(&method(:require))
+Dir[File.join(__dir__, 'admitad', '**', '*.rb')].map(&method(:require))
 
 module Admitad
   def configuration

@@ -6,7 +6,7 @@ Gem::Specification.new do |spec|
   spec.name          = 'admitad'
   spec.version       = Admitad::VERSION
   spec.authors       = ['alexandr-senyuk']
-  spec.email         = ['alexandr.030197@gmail.com']
+  spec.email         = ['a.senyuk.io@gmail.com']
 
   spec.summary       = 'Simple wrapper for admitad api'
   spec.description   = 'This interface helps you to create applications for Admitad affiliate network.
