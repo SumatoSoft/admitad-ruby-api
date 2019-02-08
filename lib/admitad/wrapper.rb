@@ -1,14 +1,14 @@
 module Admitad
   class Wrapper
     include Singleton
-    include Wrappers::Coupons
-    include Wrappers::Deeplinks
-    include Wrappers::Regions
-    include Wrappers::Actions
-    include Wrappers::Categories
-    include Wrappers::AdSpaces
-    include Wrappers::Currencies
-    include Wrappers::AffiliatePrograms
+    include Admitad::Wrappers::Coupons
+    include Admitad::Wrappers::Deeplinks
+    include Admitad::Wrappers::Regions
+    include Admitad::Wrappers::Actions
+    include Admitad::Wrappers::Categories
+    include Admitad::Wrappers::AdSpaces
+    include Admitad::Wrappers::Currencies
+    include Admitad::Wrappers::AffiliatePrograms
 
     private
 
@@ -16,12 +16,12 @@ module Admitad
       create_token
     end
 
-    def verifying_token(&block)
+    def verifying_token
       return token.attributes.stringify_keys if token.error?
-      return block.call unless token.expired?
+      return yield unless token.expired?
 
       refresh_token
-      verifying_token block
+      verifying_token { yield }
     end
 
     def create_client

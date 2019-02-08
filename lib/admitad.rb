@@ -1,8 +1,8 @@
 require 'virtus'
-require 'admitad/config'
-require 'admitad/version'
-require 'admitad/constants'
-require 'admitad/models/result'
+require_relative 'admitad/config'
+require_relative 'admitad/version'
+require_relative 'admitad/constants'
+require_relative 'admitad/models/result'
 
 Dir[File.join(__dir__, 'admitad', 'models', '*.rb')].map(&method(:require))
 Dir[File.join(__dir__, 'admitad', '**', '*.rb')].map(&method(:require))
