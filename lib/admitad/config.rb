@@ -1,5 +1,3 @@
-require 'active_support'
-
 module Admitad
   class Config
     include ActiveSupport::Configurable
